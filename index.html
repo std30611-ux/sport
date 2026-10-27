@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STRIKER HUB | ร้านอุปกรณ์ฟุตบอลของแท้ระดับพรีเมียม</title>
+    <meta name="description" content="ศูนย์รวมรองเท้าสตั๊ด เสื้อแข่งสโมสร ลูกฟุตบอล และอุปกรณ์ฟุตบอลของแท้ 100% สกรีนชื่อเบอร์ฟรี พร้อมส่งด่วนทั่วไทย">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pitch: {
+                            950: '#090d16',
+                            900: '#0b1120',
+                            800: '#141d33',
+                            700: '#1e294b',
+                        },
+                        accent: {
+                            green: '#10b981',
+                            neon: '#22c55e',
+                            cyan: '#06b6d4'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-pitch-900 text-slate-100 flex flex-col min-h-screen selection:bg-emerald-500 selection:text-slate-950">
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-slate-950 font-bold text-xs py-2 px-4 text-center">
+        <div class="container mx-auto flex items-center justify-center gap-2">
+            <span class="bg-slate-950 text-white text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider">โปรโมชั่นพิเศษ</span>
+            <span>ต้อนรับฤดูกาลใหม่! ใส่โค้ด <span class="bg-slate-950/20 px-1.5 py-0.5 rounded font-mono underline cursor-pointer" onclick="navigator.clipboard.writeText('KICKOFF10'); store.toast('คัดลอกโค้ด KICKOFF10 แล้ว!');">KICKOFF10</span> ลดทันที 10% ทุกออเดอร์ | ช้อปครบ ฿2,000 จัดส่งฟรี</span>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 glass-nav">
+        <div class="container mx-auto px-4 lg:px-8 h-20 flex items-center justify-between gap-4">
+            
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-2.5 group">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-emerald-400 to-cyan-500 flex items-center justify-center shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform">
+                    <i data-lucide="trophy" class="w-6 h-6 text-slate-950 fill-slate-950"></i>
+                </div>
+                <div>
+                    <div class="flex items-center gap-1.5">
+                        <span class="text-xl md:text-2xl font-black font-english tracking-tight uppercase text-white">STRIKER</span>
+                        <span class="text-xl md:text-2xl font-black font-english tracking-tight uppercase text-emerald-400">HUB</span>
+                    </div>
+                    <span class="text-[10px] text-slate-400 tracking-wider block font-semibold">FOOTBALL PRO GEAR</span>
+                </div>
+            </a>
+
+            <!-- Search Bar (Desktop) -->
+            <div class="hidden md:flex flex-1 max-w-md mx-6 relative">
+                <input type="text" 
+                       id="searchInput" 
+                       placeholder="ค้นหารองเท้าสตั๊ด, เสื้อแข่ง, หรืออุปกรณ์ฟุตบอล..." 
+                       class="w-full bg-slate-800/80 border border-slate-700/80 rounded-full py-2.5 pl-11 pr-4 text-sm text-slate-100 placeholder-slate-400 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition">
+                <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2"></i>
+            </div>
+
+            <!-- Header Quick Actions -->
+            <div class="flex items-center gap-3">
+                <!-- Size Guide Button -->
+                <button onclick="store.openSizeGuide()" class="hidden sm:flex items-center gap-1.5 text-xs font-semibold text-slate-300 hover:text-emerald-400 bg-slate-800/80 hover:bg-slate-800 px-3 py-2 rounded-xl border border-slate-700 transition">
+                    <i data-lucide="ruler" class="w-4 h-4 text-emerald-400"></i>
+                    <span>ตารางไซส์</span>
+                </button>
+
+                <!-- Wishlist Icon -->
+                <button onclick="store.openWishlistModal()" class="relative p-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700 text-slate-300 hover:text-rose-400 transition">
+                    <i data-lucide="heart" class="w-5 h-5"></i>
+                    <span id="wishlistBadge" class="hidden absolute -top-1.5 -right-1.5 bg-rose-500 text-white text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-slate-900 shadow">0</span>
+                </button>
+
+                <!-- Cart Button -->
+                <button onclick="store.openCartDrawer()" class="relative flex items-center gap-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-4 py-2.5 rounded-xl transition shadow-lg shadow-emerald-500/25 active:scale-95">
+                    <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                    <span class="hidden sm:inline text-xs font-extrabold uppercase">ตะกร้า</span>
+                    <span id="cartBadge" class="hidden bg-slate-950 text-emerald-400 text-[11px] font-black px-2 py-0.5 rounded-full">0</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Search Input Bar -->
+        <div class="md:hidden px-4 pb-3">
+            <div class="relative">
+                <input type="text" 
+                       id="mobileSearchInput" 
+                       placeholder="ค้นหาสตั๊ด, เสื้อบอล, ถุงมือ..." 
+                       class="w-full bg-slate-800/90 border border-slate-700 rounded-xl py-2 pl-10 pr-4 text-sm text-slate-100 placeholder-slate-400 focus:outline-none focus:border-emerald-500">
+                <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1">
+
+        <!-- Hero Banner Section -->
+        <section class="relative overflow-hidden py-14 lg:py-20 border-b border-slate-800/80 gradient-dark-banner">
+            <div class="container mx-auto px-4 lg:px-8 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                    
+                    <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                        <div class="inline-flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                            SEASON 2026/27 OFFICIAL ARRIVALS
+                        </div>
+
+                        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white leading-tight font-english tracking-tight">
+                            UNLEASH YOUR <br class="hidden sm:block">
+                            <span class="gradient-text font-black">TRUE POTENTIAL</span>
+                        </h1>
+
+                        <p class="text-slate-300 text-sm sm:text-base lg:text-lg max-w-xl mx-auto lg:mx-0 font-light leading-relaxed">
+                            ศูนย์รวมรองเท้าสตั๊ดตัวท็อป เสื้อแข่งสโมสรชั้นนำ ลูกฟุตบอลแมตช์เดย์ และอุปกรณ์ผู้รักษาประตูของแท้ 100% สกรีนชื่อเบอร์มาตรฐานเดียวกับนักเตะอาชีพ
+                        </p>
+
+                        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-2">
+                            <a href="#catalogSection" class="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black px-6 py-3.5 rounded-xl text-sm flex items-center gap-2 shadow-xl shadow-emerald-500/25 transition transform active:scale-95">
+                                <i data-lucide="zap" class="w-4 h-4 fill-slate-950"></i>
+                                <span>เลือกดูสินค้าทั้งหมด</span>
+                            </a>
+                            <button onclick="store.setCategory('boots')" class="bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700 text-slate-200 font-bold px-6 py-3.5 rounded-xl text-sm flex items-center gap-2 transition">
+                                <i data-lucide="shield" class="w-4 h-4 text-emerald-400"></i>
+                                <span>รองเท้าสตั๊ดมาแรง</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Hero Visual Card -->
+                    <div class="lg:col-span-5 relative">
+                        <div class="relative mx-auto max-w-md glass-card p-4 rounded-3xl border border-slate-700/60 shadow-2xl overflow-hidden group">
+                            <div class="absolute -top-16 -right-16 w-48 h-48 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none"></div>
+                            
+                            <div class="relative aspect-video sm:aspect-square rounded-2xl overflow-hidden bg-slate-900 mb-4">
+                                <img src="https://images.unsplash.com/photo-1511886929837-354d827aae26?auto=format&fit=crop&w=900&q=80" 
+                                     alt="Elite Football Boots" 
+                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                                <div class="absolute bottom-3 left-3 bg-slate-950/80 backdrop-blur px-3 py-1.5 rounded-xl text-xs font-bold border border-slate-800 text-emerald-400 flex items-center gap-1.5">
+                                    <i data-lucide="flame" class="w-4 h-4 fill-emerald-400"></i> NEW ARRIVAL 2026/27
+                                </div>
+                            </div>
+
+                            <div class="space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs uppercase font-extrabold text-emerald-400 tracking-wider">HOT ITEM</span>
+                                    <span class="text-xs text-slate-400">สต็อกพร้อมส่งทันที</span>
+                                </div>
+                                <h3 class="font-extrabold text-base sm:text-lg text-white">Nike Air Zoom Mercurial Superfly 10 Elite</h3>
+                                <p class="text-xs text-slate-400 line-clamp-2">สายความเร็วตัวท็อป พร้อมถุงลม Zoom Air 3/4 และปุ่ม Tri-star ทะยานสู่ทุกจังหวะทำประตู</p>
+                                
+                                <div class="flex items-center justify-between pt-2">
+                                    <div>
+                                        <span class="text-xs text-slate-400 block">ราคาพิเศษ</span>
+                                        <span class="text-xl font-black text-emerald-400">฿8,900</span>
+                                    </div>
+                                    <button onclick="store.openQuickView('boot-1')" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-1.5 transition">
+                                        <span>ดูรายละเอียด</span>
+                                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Trust Badges Bar -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12 pt-8 border-t border-slate-800/80">
+                    <div class="flex items-center gap-3 p-3 rounded-2xl bg-slate-800/40 border border-slate-800">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="badge-check" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-xs sm:text-sm text-slate-100">ของแท้ 100%</h4>
+                            <p class="text-[11px] text-slate-400">รับประกันจากผู้ผลิตโดยตรง</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-3 rounded-2xl bg-slate-800/40 border border-slate-800">
+                        <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="truck" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-xs sm:text-sm text-slate-100">จัดส่งฟรีทั่วไทย</h4>
+                            <p class="text-[11px] text-slate-400">เมื่อสั่งซื้อครบ ฿2,000</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-3 rounded-2xl bg-slate-800/40 border border-slate-800">
+                        <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="sparkles" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-xs sm:text-sm text-slate-100">สกรีนชื่อ-เบอร์ฟรี</h4>
+                            <p class="text-[11px] text-slate-400">ฟอนต์แท้มาตรฐานพรีเมียร์ลีก</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-3 rounded-2xl bg-slate-800/40 border border-slate-800">
+                        <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center flex-shrink-0">
+                            <i data-lucide="refresh-cw" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-xs sm:text-sm text-slate-100">เปลี่ยนไซส์ได้</h4>
+                            <p class="text-[11px] text-slate-400">สะดวกและรวดเร็วภายใน 7 วัน</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Category Shortcuts (Visual Cards) -->
+        <section class="py-12 bg-pitch-950/60 border-b border-slate-800/60">
+            <div class="container mx-auto px-4 lg:px-8">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-black text-white">หมวดหมู่ยอดนิยม</h2>
+                        <p class="text-xs text-slate-400">เลือกดูอุปกรณ์ฟุตบอลที่คุณต้องการได้ทันที</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4">
+                    <!-- Boots Card -->
+                    <div onclick="store.setCategory('boots')" class="glass-card p-4 rounded-2xl cursor-pointer hover:border-emerald-500/50 transition group flex flex-col items-center text-center">
+                        <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                            <i data-lucide="shield" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="font-bold text-sm text-slate-100">รองเท้าสตั๊ด</h3>
+                        <span class="text-[11px] text-slate-400 mt-0.5">FG / AG / TF ท็อป & เบสิก</span>
+                    </div>
+
+                    <!-- Jerseys Card -->
+                    <div onclick="store.setCategory('jerseys')" class="glass-card p-4 rounded-2xl cursor-pointer hover:border-cyan-500/50 transition group flex flex-col items-center text-center">
+                        <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                            <i data-lucide="shirt" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="font-bold text-sm text-slate-100">เสื้อแข่งฟุตบอล</h3>
+                        <span class="text-[11px] text-slate-400 mt-0.5">สโมสรยุโรป & ทีมชาติ</span>
+                    </div>
+
+                    <!-- Match Balls Card -->
+                    <div onclick="store.setCategory('balls')" class="glass-card p-4 rounded-2xl cursor-pointer hover:border-amber-500/50 transition group flex flex-col items-center text-center">
+                        <div class="w-14 h-14 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                            <i data-lucide="circle-dot" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="font-bold text-sm text-slate-100">ลูกฟุตบอล</h3>
+                        <span class="text-[11px] text-slate-400 mt-0.5">FIFA Quality Pro</span>
+                    </div>
+
+                    <!-- Goalkeeper Gloves Card -->
+                    <div onclick="store.setCategory('gloves')" class="glass-card p-4 rounded-2xl cursor-pointer hover:border-purple-500/50 transition group flex flex-col items-center text-center">
+                        <div class="w-14 h-14 rounded-2xl bg-purple-500/10 text-purple-400 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                            <i data-lucide="hand" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="font-bold text-sm text-slate-100">ถุงมือผู้รักษาประตู</h3>
+                        <span class="text-[11px] text-slate-400 mt-0.5">โฟมแมตช์เดย์ & เซฟนิ้ว</span>
+                    </div>
+
+                    <!-- Gear Card -->
+                    <div onclick="store.setCategory('gear')" class="col-span-2 md:col-span-1 glass-card p-4 rounded-2xl cursor-pointer hover:border-rose-500/50 transition group flex flex-col items-center text-center">
+                        <div class="w-14 h-14 rounded-2xl bg-rose-500/10 text-rose-400 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                            <i data-lucide="activity" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="font-bold text-sm text-slate-100">อุปกรณ์ซ้อม & เซฟตี้</h3>
+                        <span class="text-[11px] text-slate-400 mt-0.5">สนับแข้ง ถุงเท้ากันลื่น</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Product Catalog Section -->
+        <section id="catalogSection" class="py-12">
+            <div class="container mx-auto px-4 lg:px-8">
+                
+                <!-- Section Header & Filter Bar -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-800">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h2 class="text-2xl font-black text-white">แคตตาล็อกสินค้า</h2>
+                            <span id="productCount" class="text-xs bg-slate-800 text-slate-300 px-2.5 py-1 rounded-full font-bold">15 รายการ</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-1">สินค้าลิขสิทธิ์แท้พร้อมประกันความพึงพอใจ</p>
+                    </div>
+
+                    <!-- Filter Controls -->
+                    <div class="flex flex-wrap items-center gap-2.5">
+                        
+                        <!-- Brand Select -->
+                        <div class="flex items-center bg-slate-800/90 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-slate-300">
+                            <span class="text-slate-400 mr-2">แบรนด์:</span>
+                            <select id="brandFilter" class="bg-transparent text-slate-100 font-bold focus:outline-none cursor-pointer">
+                                <option value="all" class="bg-slate-900 text-slate-100">ทั้งหมด</option>
+                                <option value="Nike" class="bg-slate-900 text-slate-100">Nike</option>
+                                <option value="Adidas" class="bg-slate-900 text-slate-100">Adidas</option>
+                                <option value="Puma" class="bg-slate-900 text-slate-100">Puma</option>
+                                <option value="Mizuno" class="bg-slate-900 text-slate-100">Mizuno</option>
+                                <option value="Uhlsport" class="bg-slate-900 text-slate-100">Uhlsport</option>
+                                <option value="Molten" class="bg-slate-900 text-slate-100">Molten</option>
+                            </select>
+                        </div>
+
+                        <!-- Ground Type Select -->
+                        <div class="flex items-center bg-slate-800/90 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-slate-300">
+                            <span class="text-slate-400 mr-2">ประเภทปุ่ม:</span>
+                            <select id="groundFilter" class="bg-transparent text-slate-100 font-bold focus:outline-none cursor-pointer">
+                                <option value="all" class="bg-slate-900 text-slate-100">ทั้งหมด</option>
+                                <option value="FG" class="bg-slate-900 text-slate-100">FG (หญ้าจริง)</option>
+                                <option value="AG" class="bg-slate-900 text-slate-100">AG (หญ้าเทียม)</option>
+                                <option value="TF" class="bg-slate-900 text-slate-100">TF (ร้อยปุ่ม)</option>
+                            </select>
+                        </div>
+
+                        <!-- Sort Select -->
+                        <div class="flex items-center bg-slate-800/90 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-slate-300">
+                            <span class="text-slate-400 mr-2">จัดเรียง:</span>
+                            <select id="sortSelect" class="bg-transparent text-slate-100 font-bold focus:outline-none cursor-pointer">
+                                <option value="featured" class="bg-slate-900 text-slate-100">สินค้าแนะนำ</option>
+                                <option value="newest" class="bg-slate-900 text-slate-100">มาใหม่ล่าสุด</option>
+                                <option value="rating" class="bg-slate-900 text-slate-100">เรตติ้งสูงสุด</option>
+                                <option value="price-low" class="bg-slate-900 text-slate-100">ราคา: ต่ำ - สูง</option>
+                                <option value="price-high" class="bg-slate-900 text-slate-100">ราคา: สูง - ต่ำ</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Category Tabs (Horizontal Pill Nav) -->
+                <div class="flex items-center gap-2 overflow-x-auto py-4 scrollbar-none">
+                    <button class="cat-filter-btn px-4 py-2 rounded-xl text-xs font-extrabold whitespace-nowrap transition bg-emerald-500 text-slate-950 shadow-lg" data-category="all">
+                        ทั้งหมด
+                    </button>
+                    <button class="cat-filter-btn px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition bg-slate-800/80 text-slate-300 hover:text-white" data-category="boots">
+                        รองเท้าสตั๊ด (Boots)
+                    </button>
+                    <button class="cat-filter-btn px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition bg-slate-800/80 text-slate-300 hover:text-white" data-category="jerseys">
+                        เสื้อแข่ง (Jerseys)
+                    </button>
+                    <button class="cat-filter-btn px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition bg-slate-800/80 text-slate-300 hover:text-white" data-category="balls">
+                        ลูกฟุตบอล (Match Balls)
+                    </button>
+                    <button class="cat-filter-btn px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition bg-slate-800/80 text-slate-300 hover:text-white" data-category="gloves">
+                        ถุงมือผู้รักษาประตู (GK Gloves)
+                    </button>
+                    <button class="cat-filter-btn px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition bg-slate-800/80 text-slate-300 hover:text-white" data-category="gear">
+                        สนับแข้งและอุปกรณ์ซ้อม
+                    </button>
+                </div>
+
+                <!-- Products Grid -->
+                <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 pt-4">
+                    <!-- Dynamic product cards will be rendered here via JS -->
+                </div>
+
+                <!-- Empty State -->
+                <div id="emptyState" class="hidden py-16 text-center">
+                    <div class="w-16 h-16 rounded-2xl bg-slate-800 flex items-center justify-center mx-auto mb-4 text-slate-500">
+                        <i data-lucide="package-search" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-200">ไม่พบสินค้าตามเงื่อนไขที่คุณเลือก</h3>
+                    <p class="text-xs text-slate-400 mt-1">ลองเปลี่ยนคำค้นหา หรือรีเซ็ตตัวกรองเพื่อดูสินค้าทั้งหมด</p>
+                    <button onclick="document.getElementById('searchInput').value=''; store.searchQuery=''; store.activeCategory='all'; store.selectedBrand='all'; store.selectedGround='all'; store.renderProducts();" class="mt-4 bg-emerald-500 text-slate-950 font-bold text-xs px-4 py-2 rounded-xl">
+                        ดูสินค้าทั้งหมด
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Jersey Customization & Workshop Highlight Banner -->
+        <section class="py-14 bg-gradient-to-r from-slate-900 via-pitch-800 to-slate-900 border-t border-b border-slate-800">
+            <div class="container mx-auto px-4 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    
+                    <div class="lg:col-span-7 space-y-4">
+                        <span class="bg-amber-400 text-slate-950 text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider">EXCLUSIVE WORKSHOP</span>
+                        <h2 class="text-2xl sm:text-4xl font-black text-white">บริการสกรีนชื่อ & เบอร์เสื้อบอลแท้ ฟรี!</h2>
+                        <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+                            สั่งซื้อเสื้อแข่งกับ STRIKER HUB รับบริการรีดติดชื่อและเบอร์มาตรฐานเดียวกับลีกยุโรป (Premier League, La Liga, UCL) ด้วยเครื่องรีดความร้อนแรงดันสูง ไม่หลุดลอก พร้อมอาร์มแขนของแท้
+                        </p>
+                        <div class="flex items-center gap-4 text-xs font-semibold text-slate-300 pt-2">
+                            <div class="flex items-center gap-1.5 text-emerald-400">
+                                <i data-lucide="check" class="w-4 h-4"></i> ฟอนต์ลิขสิทธิ์ถูกต้อง
+                            </div>
+                            <div class="flex items-center gap-1.5 text-emerald-400">
+                                <i data-lucide="check" class="w-4 h-4"></i> บล็อกรีดคมชัดระดับ HD
+                            </div>
+                            <div class="flex items-center gap-1.5 text-emerald-400">
+                                <i data-lucide="check" class="w-4 h-4"></i> จัดส่งไว ไม่ต้องรอนาน
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-5 flex justify-center">
+                        <!-- Interactive Jersey Mockup Preview Card -->
+                        <div class="w-full max-w-sm glass-card p-5 rounded-2xl border border-slate-700/80 text-center">
+                            <span class="text-xs text-slate-400 uppercase font-bold tracking-wider block mb-2">ตัวอย่างการจำลองสกรีน</span>
+                            
+                            <div class="jersey-preview-container h-48 rounded-xl flex flex-col items-center justify-center border border-slate-700/60 p-4 shadow-inner">
+                                <div class="text-[11px] font-black tracking-widest text-emerald-400 uppercase">OFFICIAL PRINT</div>
+                                <div id="demoJerseyName" class="text-2xl font-black tracking-wider text-white uppercase mt-2">RONALDO</div>
+                                <div id="demoJerseyNum" class="jersey-number-font text-6xl text-amber-400 leading-none">7</div>
+                            </div>
+
+                            <button onclick="store.setCategory('jerseys')" class="mt-4 w-full bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-bold py-2.5 rounded-xl text-xs transition flex items-center justify-center gap-2">
+                                <i data-lucide="shirt" class="w-4 h-4 text-emerald-400"></i>
+                                <span>เลือกเสื้อแข่งเพื่อสั่งสกรีน</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800/80 pt-12 pb-8">
+        <div class="container mx-auto px-4 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
+                
+                <!-- Col 1: Store Intro -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center">
+                            <i data-lucide="trophy" class="w-4 h-4 text-slate-950"></i>
+                        </div>
+                        <span class="text-lg font-black font-english text-white">STRIKER <span class="text-emerald-400">HUB</span></span>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        ร้านจัดจำหน่ายอุปกรณ์กีฬาฟุตบอลระดับพรีเมียม สตั๊ดแบรนด์เนม เสื้อแข่งสโมสรยุโรป และอุปกรณ์ซ้อมมาตรฐานฟีฟ่า บริการจัดส่งทั่วประเทศ
+                    </p>
+                    <div class="flex items-center gap-3 text-slate-400">
+                        <a href="#" class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center hover:text-emerald-400 transition"><i data-lucide="facebook" class="w-4 h-4"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center hover:text-emerald-400 transition"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center hover:text-emerald-400 transition"><i data-lucide="message-circle" class="w-4 h-4"></i></a>
+                    </div>
+                </div>
+
+                <!-- Col 2: Categories -->
+                <div>
+                    <h4 class="font-bold text-sm text-slate-200 mb-4">หมวดหมู่สินค้า</h4>
+                    <ul class="space-y-2 text-xs text-slate-400">
+                        <li><a href="javascript:void(0)" onclick="store.setCategory('boots')" class="hover:text-emerald-400 transition">รองเท้าสตั๊ด (Football Boots)</a></li>
+                        <li><a href="javascript:void(0)" onclick="store.setCategory('jerseys')" class="hover:text-emerald-400 transition">เสื้อแข่งสโมสรและทีมชาติ</a></li>
+                        <li><a href="javascript:void(0)" onclick="store.setCategory('balls')" class="hover:text-emerald-400 transition">ลูกฟุตบอล FIFA Quality Pro</a></li>
+                        <li><a href="javascript:void(0)" onclick="store.setCategory('gloves')" class="hover:text-emerald-400 transition">ถุงมือผู้รักษาประตู FingerSave</a></li>
+                        <li><a href="javascript:void(0)" onclick="store.setCategory('gear')" class="hover:text-emerald-400 transition">สนับแข้งและถุงเท้ากันลื่น</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Customer Care -->
+                <div>
+                    <h4 class="font-bold text-sm text-slate-200 mb-4">บริการลูกค้า</h4>
+                    <ul class="space-y-2 text-xs text-slate-400">
+                        <li><a href="javascript:void(0)" onclick="store.openSizeGuide()" class="hover:text-emerald-400 transition">ตารางเทียบไซส์สตั๊ด (Size Guide)</a></li>
+                        <li><a href="javascript:void(0)" class="hover:text-emerald-400 transition">นโยบายการรับประกันสินค้าของแท้</a></li>
+                        <li><a href="javascript:void(0)" class="hover:text-emerald-400 transition">การเปลี่ยนไซส์ภายใน 7 วัน</a></li>
+                        <li><a href="javascript:void(0)" class="hover:text-emerald-400 transition">บริการสกรีนชื่อและเบอร์เสื้อ</a></li>
+                        <li><a href="javascript:void(0)" class="hover:text-emerald-400 transition">ติดตามสถานะพัสดุ (Tracking)</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Store Contact -->
+                <div class="space-y-3">
+                    <h4 class="font-bold text-sm text-slate-200 mb-4">หน้าร้าน & ติดต่อเรา</h4>
+                    <p class="text-xs text-slate-400 flex items-start gap-2">
+                        <i data-lucide="map-pin" class="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5"></i>
+                        <span>สาขา 1: อาคารสเตเดียม วัน (Stadium One) จุฬาซอย 6 ปทุมวัน กรุงเทพฯ</span>
+                    </p>
+                    <p class="text-xs text-slate-400 flex items-center gap-2">
+                        <i data-lucide="phone" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i>
+                        <span>02-888-9999 / 089-777-6655</span>
+                    </p>
+                    <p class="text-xs text-slate-400 flex items-center gap-2">
+                        <i data-lucide="clock" class="w-4 h-4 text-emerald-400 flex-shrink-0"></i>
+                        <span>เปิดทุกวัน: 10:00 - 21:00 น.</span>
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="pt-6 border-t border-slate-800 text-center text-xs text-slate-500">
+                <p>&copy; 2026 STRIKER HUB. All rights reserved. ศูนย์รวมอุปกรณ์ฟุตบอลระดับมืออาชีพ</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ================= MODALS & DRAWERS ================= -->
+
+    <!-- Product Detail & Quick View Modal -->
+    <div id="productDetailModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="relative w-full max-w-3xl glass-card rounded-3xl border border-slate-700 bg-slate-900 shadow-2xl overflow-hidden my-8">
+            
+            <!-- Close Button -->
+            <button onclick="store.closeProductModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center z-20 transition">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <div class="grid grid-cols-1 md:grid-cols-2">
+                <!-- Product Image Area -->
+                <div class="bg-slate-950 p-6 flex items-center justify-center relative">
+                    <img id="modalProductImage" src="" alt="Product Detail" class="max-h-80 w-full object-cover rounded-2xl shadow-xl">
+                </div>
+
+                <!-- Product Info & Action Form -->
+                <div class="p-6 md:p-8 flex flex-col justify-between max-h-[85vh] overflow-y-auto">
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <span id="modalProductBrand" class="text-xs font-bold uppercase text-emerald-400 tracking-wider">BRAND</span>
+                            <div class="flex items-center gap-1 text-amber-400 text-xs">
+                                <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i>
+                                <span id="modalProductRating" class="font-bold">5.0</span>
+                                <span id="modalProductReviews" class="text-slate-400">(0 รีวิว)</span>
+                            </div>
+                        </div>
+
+                        <h3 id="modalProductName" class="text-xl font-black text-white leading-snug">Product Name</h3>
+
+                        <div class="flex items-baseline gap-3 my-3">
+                            <span id="modalProductPrice" class="text-2xl font-black text-emerald-400">฿0</span>
+                            <span id="modalProductOriginalPrice" class="text-sm text-slate-500 line-through">฿0</span>
+                        </div>
+
+                        <p id="modalProductDesc" class="text-xs text-slate-300 leading-relaxed mb-4">Description</p>
+
+                        <!-- Size Selector -->
+                        <div class="mb-4">
+                            <div class="flex items-center justify-between text-xs mb-2">
+                                <span class="font-bold text-slate-200">เลือกไซส์:</span>
+                                <button type="button" onclick="store.openSizeGuide()" class="text-emerald-400 hover:underline flex items-center gap-1">
+                                    <i data-lucide="ruler" class="w-3 h-3"></i> ตารางเทียบไซส์
+                                </button>
+                            </div>
+                            <div id="modalProductSizes" class="grid grid-cols-4 gap-2">
+                                <!-- Sizes dynamically rendered here -->
+                            </div>
+                        </div>
+
+                        <!-- Jersey Customizer Section (Only visible for Jerseys) -->
+                        <div id="jerseyCustomizerSection" class="hidden mb-4 p-3 bg-slate-800/80 rounded-xl border border-slate-700">
+                            <div class="flex items-center justify-between text-xs mb-2">
+                                <span class="font-bold text-amber-300 flex items-center gap-1">
+                                    <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> สกรีนชื่อและเบอร์หลังเสื้อ (ฟรี!)
+                                </span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div>
+                                    <label class="text-[10px] text-slate-400 block mb-1">ชื่อด้านหลัง (ภาษาอังกฤษ)</label>
+                                    <input type="text" id="customNameInput" placeholder="เช่น MESSI" maxlength="12" 
+                                           class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white uppercase focus:border-emerald-500 focus:outline-none">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] text-slate-400 block mb-1">หมายเลข (0-99)</label>
+                                    <input type="text" id="customNumberInput" placeholder="เช่น 10" maxlength="2" 
+                                           class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:border-emerald-500 focus:outline-none">
+                                </div>
+                            </div>
+                            
+                            <!-- Mini Live Preview Box -->
+                            <div class="mt-2.5 py-2 px-3 bg-slate-900 rounded-lg flex items-center justify-between text-xs border border-slate-800">
+                                <span class="text-slate-400 text-[11px]">พรีวิวหลังเสื้อ:</span>
+                                <div class="font-black text-emerald-400 tracking-wider">
+                                    <span id="jerseyPreviewName">STRIKER</span> #<span id="jerseyPreviewNumber">10</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Specs Table -->
+                        <div class="mb-4">
+                            <span class="font-bold text-xs text-slate-200 block mb-1.5">คุณสมบัติเฉพาะ:</span>
+                            <div id="modalProductSpecs" class="space-y-1">
+                                <!-- Specs list -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Bottom Action Controls -->
+                    <div class="pt-4 border-t border-slate-800 flex items-center gap-3">
+                        <div class="flex items-center border border-slate-700 rounded-xl bg-slate-800">
+                            <button onclick="document.getElementById('modalProductQty').stepDown()" class="px-3 py-2 text-slate-300 hover:text-white"><i data-lucide="minus" class="w-3.5 h-3.5"></i></button>
+                            <input type="number" id="modalProductQty" value="1" min="1" max="10" class="w-8 text-center bg-transparent text-xs font-bold text-white focus:outline-none">
+                            <button onclick="document.getElementById('modalProductQty').stepUp()" class="px-3 py-2 text-slate-300 hover:text-white"><i data-lucide="plus" class="w-3.5 h-3.5"></i></button>
+                        </div>
+
+                        <button onclick="store.addModalProductToCart()" class="flex-1 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black py-3 rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/25 active:scale-95 transition">
+                            <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                            <span>ใส่ตะกร้าสินค้า</span>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Slide-over Cart Drawer -->
+    <div id="cartOverlay" onclick="store.closeCartDrawer()" class="hidden fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm transition-opacity"></div>
+    <div id="cartDrawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-slate-900 border-l border-slate-800 z-50 shadow-2xl flex flex-col transform translate-x-full drawer-transition">
+        
+        <!-- Cart Drawer Header -->
+        <div class="p-4 border-b border-slate-800 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <i data-lucide="shopping-cart" class="w-5 h-5 text-emerald-400"></i>
+                <h3 class="font-black text-base text-white">ตะกร้าสินค้าของคุณ</h3>
+            </div>
+            <button onclick="store.closeCartDrawer()" class="w-8 h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 flex items-center justify-center transition">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+        </div>
+
+        <!-- Free Shipping Progress Tracker -->
+        <div class="px-4 py-3 bg-slate-850 bg-slate-900/60 border-b border-slate-800">
+            <div id="freeShippingProgressText" class="text-xs text-slate-300 mb-2">
+                ซื้อเพิ่มอีก <span class="text-emerald-400 font-bold">฿2,000</span> เพื่อรับสิทธิ์ส่งฟรี!
+            </div>
+            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                <div id="freeShippingProgressBar" class="h-full bg-gradient-to-r from-emerald-500 to-cyan-400 rounded-full transition-all duration-500" style="width: 0%;"></div>
+            </div>
+        </div>
+
+        <!-- Cart Items List Container -->
+        <div id="cartItemsList" class="flex-1 overflow-y-auto p-4 space-y-3">
+            <!-- Dynamic Cart Items -->
+        </div>
+
+        <!-- Cart Empty State -->
+        <div id="cartEmptyState" class="hidden flex-1 flex flex-col items-center justify-center p-6 text-center">
+            <div class="w-16 h-16 rounded-2xl bg-slate-800 flex items-center justify-center mb-4 text-slate-500">
+                <i data-lucide="shopping-bag" class="w-8 h-8"></i>
+            </div>
+            <h4 class="font-bold text-sm text-slate-200">ยังไม่มีสินค้าในตะกร้า</h4>
+            <p class="text-xs text-slate-400 mt-1 max-w-xs">เลือกดูรองเท้าสตั๊ด เสื้อบอล หรืออุปกรณ์ที่คุณชอบ แล้วกดเพิ่มลงในตะกร้าได้เลย</p>
+            <button onclick="store.closeCartDrawer()" class="mt-4 bg-emerald-500 text-slate-950 font-bold text-xs px-5 py-2.5 rounded-xl hover:bg-emerald-400 transition">
+                เริ่มเลือกซื้อสินค้า
+            </button>
+        </div>
+
+        <!-- Cart Drawer Footer & Checkout Summary -->
+        <div id="cartFooter" class="p-4 border-t border-slate-800 bg-slate-900/95 space-y-3">
+            
+            <!-- Promo Code Input Form -->
+            <div>
+                <div class="flex gap-2">
+                    <input type="text" id="promoCodeInput" placeholder="โค้ดส่วนลด (เช่น KICKOFF10)" class="flex-1 bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white uppercase placeholder-slate-500 focus:outline-none focus:border-emerald-500">
+                    <button onclick="store.applyPromoCode()" class="bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-200 font-bold px-3 py-2 rounded-xl text-xs transition">
+                        ใช้โค้ด
+                    </button>
+                </div>
+                <div id="activePromoBadge" class="hidden mt-2"></div>
+            </div>
+
+            <!-- Price Breakdown -->
+            <div class="space-y-1.5 text-xs">
+                <div class="flex justify-between text-slate-400">
+                    <span>ยอดรวมสินค้า:</span>
+                    <span id="cartSubtotal" class="font-bold text-slate-200">฿0</span>
+                </div>
+                <div class="flex justify-between text-slate-400">
+                    <span>ส่วนลด:</span>
+                    <span id="cartDiscount" class="font-bold text-rose-400">฿0</span>
+                </div>
+                <div class="flex justify-between text-slate-400">
+                    <span>ค่าจัดส่ง:</span>
+                    <span id="cartShipping" class="font-bold text-slate-200">฿100</span>
+                </div>
+                <div class="flex justify-between text-sm font-black text-white pt-2 border-t border-slate-800">
+                    <span>ยอดชำระสุทธิ:</span>
+                    <span id="cartTotal" class="text-lg font-black text-emerald-400">฿0</span>
+                </div>
+            </div>
+
+            <!-- Checkout Action Button -->
+            <button onclick="store.openCheckout()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black py-3 rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/25 active:scale-95 transition">
+                <i data-lucide="credit-card" class="w-4 h-4"></i>
+                <span>ดำเนินการชำระเงิน</span>
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="relative w-full max-w-2xl glass-card rounded-3xl border border-slate-700 bg-slate-900 shadow-2xl p-6 md:p-8 my-8">
+            
+            <button onclick="store.closeCheckout()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 flex items-center justify-center transition">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <div class="flex items-center gap-2.5 mb-6">
+                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
+                    <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h3 class="font-black text-lg text-white">เช็คเอาท์และสั่งซื้อสินค้า</h3>
+                    <p class="text-xs text-slate-400">กรอกข้อมูลการจัดส่งและเลือกช่องทางชำระเงิน</p>
+                </div>
+            </div>
+
+            <form onsubmit="store.handleCheckoutSubmit(event)" class="space-y-6">
+                
+                <!-- Shipping Info -->
+                <div class="space-y-3">
+                    <h4 class="font-bold text-xs uppercase tracking-wider text-emerald-400">1. ข้อมูลผู้รับสินค้า</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="text-[11px] text-slate-400 block mb-1">ชื่อ - นามสกุล *</label>
+                            <input type="text" id="buyerName" required placeholder="นายชนาธิป สรงกระสินธ์" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
+                        </div>
+                        <div>
+                            <label class="text-[11px] text-slate-400 block mb-1">เบอร์โทรศัพท์ติดต่อ *</label>
+                            <input type="tel" id="buyerPhone" required placeholder="081-234-5678" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="text-[11px] text-slate-400 block mb-1">ที่อยู่จัดส่งโดยละเอียด (บ้านเลขที่, แขวง/ตำบล, เขต/อำเภอ, จังหวัด, รหัสไปรษณีย์) *</label>
+                        <textarea id="buyerAddress" required rows="2" placeholder="99/123 หมู่ 4 ซอยสุขุมวิท 71 แขวงพระโขนงเหนือ เขตวัฒนา กรุงเทพฯ 10110" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500"></textarea>
+                    </div>
+                </div>
+
+                <!-- Shipping Method -->
+                <div class="space-y-2">
+                    <h4 class="font-bold text-xs uppercase tracking-wider text-emerald-400">2. ตัวเลือกขนส่ง</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        <label class="flex items-center gap-3 p-3 bg-slate-800/80 rounded-xl border border-slate-700 cursor-pointer hover:border-emerald-500">
+                            <input type="radio" name="shippingCarrier" value="Flash Express" checked class="accent-emerald-500">
+                            <div>
+                                <div class="font-bold text-slate-100">Flash Express / Kerry ด่วนพิเศษ</div>
+                                <div class="text-[11px] text-slate-400">ส่งถึงใน 1-2 วันทำการ</div>
+                            </div>
+                        </label>
+                        <label class="flex items-center gap-3 p-3 bg-slate-800/80 rounded-xl border border-slate-700 cursor-pointer hover:border-emerald-500">
+                            <input type="radio" name="shippingCarrier" value="EMS Thailand Post" class="accent-emerald-500">
+                            <div>
+                                <div class="font-bold text-slate-100">ไปรษณีย์ไทย EMS ด่วน</div>
+                                <div class="text-[11px] text-slate-400">ครอบคลุมทุกพื้นที่ทั่วไทย</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Payment Method -->
+                <div class="space-y-2">
+                    <h4 class="font-bold text-xs uppercase tracking-wider text-emerald-400">3. วิธีชำระเงิน</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+                        <label class="flex flex-col gap-1 p-3 bg-slate-800/80 rounded-xl border border-slate-700 cursor-pointer hover:border-emerald-500">
+                            <div class="flex items-center gap-2">
+                                <input type="radio" name="paymentMethod" value="พร้อมเพย์ QR Code" checked class="accent-emerald-500">
+                                <span class="font-bold text-slate-100">PromptPay QR</span>
+                            </div>
+                            <span class="text-[11px] text-emerald-400">สแกนจ่ายทันที ไม่มีค่าธรรมเนียม</span>
+                        </label>
+                        <label class="flex flex-col gap-1 p-3 bg-slate-800/80 rounded-xl border border-slate-700 cursor-pointer hover:border-emerald-500">
+                            <div class="flex items-center gap-2">
+                                <input type="radio" name="paymentMethod" value="โอนเงินผ่านธนาคาร" class="accent-emerald-500">
+                                <span class="font-bold text-slate-100">โอนเงินธนาคาร</span>
+                            </div>
+                            <span class="text-[11px] text-slate-400">กสิกร / ไทยพาณิชย์</span>
+                        </label>
+                        <label class="flex flex-col gap-1 p-3 bg-slate-800/80 rounded-xl border border-slate-700 cursor-pointer hover:border-emerald-500">
+                            <div class="flex items-center gap-2">
+                                <input type="radio" name="paymentMethod" value="เก็บเงินปลายทาง (COD)" class="accent-emerald-500">
+                                <span class="font-bold text-slate-100">เก็บเงินปลายทาง</span>
+                            </div>
+                            <span class="text-[11px] text-slate-400">ชำระเมื่อได้รับของ</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Order Summary Breakdown -->
+                <div class="p-3 bg-slate-950 rounded-xl border border-slate-800">
+                    <div class="text-xs font-bold text-slate-300 mb-2">สรุปรายการคำสั่งซื้อ:</div>
+                    <div id="checkoutItemsList" class="space-y-1 mb-2"></div>
+                    <div class="flex justify-between items-center pt-2 border-t border-slate-800 text-sm font-black">
+                        <span class="text-white">ยอดชำระสุทธิทั้งหมด:</span>
+                        <span id="checkoutGrandTotal" class="text-emerald-400 text-lg">฿0</span>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black py-3.5 rounded-xl text-sm flex items-center justify-center gap-2 shadow-xl shadow-emerald-500/25 transition">
+                    <i data-lucide="check-circle" class="w-4 h-4"></i>
+                    <span>ยืนยันการสั่งซื้อสินค้า</span>
+                </button>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- Order Success Receipt Modal -->
+    <div id="orderSuccessModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="relative w-full max-w-lg glass-card rounded-3xl border border-slate-700 bg-slate-900 shadow-2xl p-6 md:p-8 text-center my-8">
+            
+            <div class="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto mb-4 border border-emerald-500/40">
+                <i data-lucide="check" class="w-8 h-8 stroke-[3]"></i>
+            </div>
+
+            <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">ORDER CONFIRMED</span>
+            <h3 class="text-2xl font-black text-white mt-1">สั่งซื้อสินค้าสำเร็จ!</h3>
+            <p class="text-xs text-slate-300 mt-1 mb-6">เราได้รับคำสั่งซื้อของคุณเรียบร้อยแล้ว และกำลังจัดเตรียมสินค้าเพื่อจัดส่งทันที</p>
+
+            <!-- Printable Receipt Card -->
+            <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4 text-left space-y-2.5 text-xs text-slate-300 mb-6">
+                <div class="flex justify-between border-b border-slate-800 pb-2">
+                    <span class="text-slate-400">หมายเลขออเดอร์:</span>
+                    <span id="receiptOrderId" class="font-mono font-bold text-emerald-400">ORD-123456</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-slate-400">วันที่สั่งซื้อ:</span>
+                    <span id="receiptDate" class="font-medium text-slate-200">-</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-slate-400">ชื่อผู้รับ:</span>
+                    <span id="receiptCustomerName" class="font-medium text-slate-200">-</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-slate-400">เบอร์โทรศัพท์:</span>
+                    <span id="receiptPhone" class="font-medium text-slate-200">-</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-slate-400">ที่อยู่:</span>
+                    <span id="receiptAddress" class="font-medium text-slate-200 text-right max-w-[200px] truncate">-</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-slate-400">วิธีชำระเงิน:</span>
+                    <span id="receiptPayment" class="font-medium text-slate-200">-</span>
+                </div>
+
+                <div class="pt-2 border-t border-slate-800">
+                    <span class="text-slate-400 block mb-1">รายการสินค้า:</span>
+                    <div id="receiptItemsList" class="space-y-1"></div>
+                </div>
+
+                <div class="flex justify-between items-center pt-2 border-t border-slate-800 text-sm font-black">
+                    <span class="text-white">ยอดชำระรวม:</span>
+                    <span id="receiptTotal" class="text-emerald-400 text-base">฿0</span>
+                </div>
+            </div>
+
+            <button onclick="store.closeOrderSuccessModal()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black py-3 rounded-xl text-xs transition">
+                กลับไปยังหน้าหลักร้านค้า
+            </button>
+        </div>
+    </div>
+
+    <!-- Size Guide Modal -->
+    <div id="sizeGuideModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="relative w-full max-w-2xl glass-card rounded-3xl border border-slate-700 bg-slate-900 shadow-2xl p-6 md:p-8 my-8">
+            <button onclick="store.closeSizeGuide()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 flex items-center justify-center transition">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <div class="flex items-center gap-2.5 mb-4">
+                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
+                    <i data-lucide="ruler" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <h3 class="font-black text-lg text-white">ตารางเทียบไซส์อุปกรณ์ฟุตบอล (Size Guide)</h3>
+                    <p class="text-xs text-slate-400">เปรียบเทียบขนาดรองเท้าสตั๊ดและความกว้างเสื้อแข่ง</p>
+                </div>
+            </div>
+
+            <!-- Boots Size Table -->
+            <div class="space-y-4 text-xs">
+                <div>
+                    <h4 class="font-bold text-emerald-400 mb-2 flex items-center gap-1.5">
+                        <i data-lucide="shield" class="w-4 h-4"></i> ตารางเทียบไซส์รองเท้าสตั๊ด (Nike / Adidas / Mizuno)
+                    </h4>
+                    <div class="overflow-x-auto rounded-xl border border-slate-800">
+                        <table class="w-full text-left">
+                            <thead class="bg-slate-800/80 text-slate-300">
+                                <tr>
+                                    <th class="p-2.5 font-bold">JP / CM</th>
+                                    <th class="p-2.5 font-bold">US (Men)</th>
+                                    <th class="p-2.5 font-bold">UK</th>
+                                    <th class="p-2.5 font-bold">EUR</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800 text-slate-300">
+                                <tr><td class="p-2.5 font-bold text-emerald-400">25.0 cm</td><td class="p-2.5">7.0 US</td><td class="p-2.5">6.0 UK</td><td class="p-2.5">40.0 EUR</td></tr>
+                                <tr><td class="p-2.5 font-bold text-emerald-400">25.5 cm</td><td class="p-2.5">7.5 US</td><td class="p-2.5">6.5 UK</td><td class="p-2.5">40.5 EUR</td></tr>
+                                <tr><td class="p-2.5 font-bold text-emerald-400">26.0 cm</td><td class="p-2.5">8.0 US</td><td class="p-2.5">7.0 UK</td><td class="p-2.5">41.0 EUR</td></tr>
+                                <tr><td class="p-2.5 font-bold text-emerald-400">26.5 cm</td><td class="p-2.5">8.5 US</td><td class="p-2.5">7.5 UK</td><td class="p-2.5">42.0 EUR</td></tr>
+                                <tr><td class="p-2.5 font-bold text-emerald-400">27.0 cm</td><td class="p-2.5">9.0 US</td><td class="p-2.5">8.0 UK</td><td class="p-2.5">42.5 EUR</td></tr>
+                                <tr><td class="p-2.5 font-bold text-emerald-400">27.5 cm</td><td class="p-2.5">9.5 US</td><td class="p-2.5">8.5 UK</td><td class="p-2.5">43.0 EUR</td></tr>
+                                <tr><td class="p-2.5 font-bold text-emerald-400">28.0 cm</td><td class="p-2.5">10.0 US</td><td class="p-2.5">9.0 UK</td><td class="p-2.5">44.0 EUR</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="text-[11px] text-slate-400 mt-1.5">* แนะนำวัดความยาวฝ่าเท้าเป็นเซนติเมตร (CM) จะแม่นยำที่สุด</p>
+                </div>
+
+                <!-- Jersey Size Table -->
+                <div class="pt-2">
+                    <h4 class="font-bold text-cyan-400 mb-2 flex items-center gap-1.5">
+                        <i data-lucide="shirt" class="w-4 h-4"></i> ตารางไซส์เสื้อแข่งฟุตบอล (รอบอก / ความยาว)
+                    </h4>
+                    <div class="overflow-x-auto rounded-xl border border-slate-800">
+                        <table class="w-full text-left">
+                            <thead class="bg-slate-800/80 text-slate-300">
+                                <tr>
+                                    <th class="p-2.5 font-bold">ไซส์</th>
+                                    <th class="p-2.5 font-bold">รอบอก (นิ้ว)</th>
+                                    <th class="p-2.5 font-bold">ความยาวเสื้อ (นิ้ว)</th>
+                                    <th class="p-2.5 font-bold">เหมาะสำหรับน้ำหนัก</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800 text-slate-300">
+                                <tr><td class="p-2.5 font-bold text-cyan-400">S</td><td class="p-2.5">38 - 39 นิ้ว</td><td class="p-2.5">27 นิ้ว</td><td class="p-2.5">50 - 65 kg</td></tr>
+                                <tr><td class="p-2.5 font-bold text-cyan-400">M</td><td class="p-2.5">40 - 41 นิ้ว</td><td class="p-2.5">28 นิ้ว</td><td class="p-2.5">65 - 75 kg</td></tr>
+                                <tr><td class="p-2.5 font-bold text-cyan-400">L</td><td class="p-2.5">42 - 43 นิ้ว</td><td class="p-2.5">29 นิ้ว</td><td class="p-2.5">75 - 85 kg</td></tr>
+                                <tr><td class="p-2.5 font-bold text-cyan-400">XL</td><td class="p-2.5">44 - 45 นิ้ว</td><td class="p-2.5">30 นิ้ว</td><td class="p-2.5">85 - 95 kg</td></tr>
+                                <tr><td class="p-2.5 font-bold text-cyan-400">2XL</td><td class="p-2.5">46 - 48 นิ้ว</td><td class="p-2.5">31 นิ้ว</td><td class="p-2.5">95+ kg</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="store.closeSizeGuide()" class="mt-6 w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-xl text-xs transition">
+                ปิดหน้าต่าง
+            </button>
+        </div>
+    </div>
+
+    <!-- Wishlist Modal -->
+    <div id="wishlistModal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="relative w-full max-w-lg glass-card rounded-3xl border border-slate-700 bg-slate-900 shadow-2xl p-6 my-8">
+            <button onclick="store.closeWishlistModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 flex items-center justify-center transition">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <div class="flex items-center gap-2 mb-4">
+                <i data-lucide="heart" class="w-5 h-5 text-rose-500 fill-rose-500"></i>
+                <h3 class="font-black text-lg text-white">รายการที่ชอบ (Wishlist)</h3>
+            </div>
+
+            <div id="wishlistItemsContainer" class="space-y-2.5 max-h-[60vh] overflow-y-auto">
+                <!-- Wishlist items dynamically rendered here -->
+            </div>
+
+            <button onclick="store.closeWishlistModal()" class="mt-4 w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-xl text-xs transition">
+                ปิดหน้าต่าง
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 max-w-sm pointer-events-none"></div>
+
+    <!-- Application Scripts -->
+    <script src="js/products.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

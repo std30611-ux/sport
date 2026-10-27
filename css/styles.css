@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;600;700;800;900&display=swap');
+
+:root {
+    --primary-color: #10b981;
+    --primary-dark: #059669;
+    --accent-color: #06b6d4;
+    --dark-bg: #0f172a;
+    --card-bg: #1e293b;
+}
+
+body {
+    font-family: 'Kanit', sans-serif;
+    scroll-behavior: smooth;
+    background-color: #0b1120;
+    color: #f1f5f9;
+}
+
+.font-english {
+    font-family: 'Outfit', sans-serif;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #0f172a;
+}
+::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #10b981;
+}
+
+/* Glassmorphism */
+.glass-nav {
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card {
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-card:hover {
+    border-color: rgba(16, 185, 129, 0.4);
+    box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.15);
+}
+
+/* Animated Gradient Text */
+.gradient-text {
+    background: linear-gradient(135deg, #34d399 0%, #38bdf8 50%, #818cf8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.gradient-sports {
+    background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+}
+
+.gradient-dark-banner {
+    background: linear-gradient(180deg, rgba(15,23,42,0) 0%, rgba(11,17,32,1) 100%),
+                radial-gradient(circle at 80% 20%, rgba(16,185,129,0.15) 0%, rgba(11,17,32,0) 50%);
+}
+
+/* Badge pulse */
+.pulse-badge {
+    animation: pulseGlow 2s infinite;
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.8);
+    }
+}
+
+/* Transitions */
+.drawer-transition {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+/* Jersey Customizer Preview Area */
+.jersey-preview-container {
+    background: radial-gradient(circle, #1e293b 0%, #0f172a 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.jersey-number-font {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 900;
+    letter-spacing: -2px;
+}
